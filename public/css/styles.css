@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Cutive&family=Questrial&family=Raleway&family=Trirong:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+html{
+  min-height: 100%;
+  position:relative;
+}
+body{
+  margin:0px;
+  /* border:0px; */
+    background:#9AA7C9;
+} 
+h1{
+    font-family:'Lato', sans-serif;
+    font-size: 2rem;
+}
+
+.header-nav{
+  background-color:#BA1F33;
+  /* background-color:#19323C; */
+  padding:15px;
+  text-align:center;
+}
+.nav-li{
+  display:inline;
+  color:#F2F7F4;
+  padding:2rem;
+  font-size:0.8rem;
+  font-family: 'Montserrat', sans-serif;
+  border-radius:5px;
+  font-weight:bold;
+}
+.nav-li:hover{
+  color:white;
+  background-color:#0C181D;
+  box-shadow:0 0 15px rgba(0,0,0,0.2);
+  
+}
+
+.footer{ 
+   position:fixed;
+   bottom:0;
+   right: 0;
+   left:0; 
+   height:100px;   /* Height of the footer */
+   font-family: 'Montserrat', sans-serif;
+   padding:10px;
+   background:linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)), url(https://images.unsplash.com/photo-1589369344941-f8a285e2a419?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80); 
+}
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+  }
+.icons-table{
+  float:right;
+} 
+.footer-list{
+  color:white;
+  list-style-type:none;
+  padding-left:0px;
+  font-size:0.8rem;
+}
+
+
+
+/* Below is the code for flexbox and inner body */
+.flex-container {
+  padding:20px;
+  display:flex;
+  flex-flow:row wrap;
+  justify-content:flex-start;
+  width:960px;
+  margin:auto;
+}
+.flex-items{
+  height:325px;
+  width:300px;
+  background-color:#ffffff;
+  border-radius:5px;
+  margin:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.3);
+  transition:0.3s;
+  position: relative;
+}
+.card-heading{
+  font-family:'Roboto Slab',sans-serif;
+  font-weight:bold;
+  color:#BA1F33;
+  font-size:20px;
+  padding:20px;
+  max-height:50px;
+}
+.card-content{
+  font-family:"PT sans",sans-serif;
+  font-weight:regular;
+  padding:20px;
+  font-size:14px;  
+  display:block;
+  max-height:130px;
+  overflow:hidden;
+}
+.card-buttons{
+  text-align:center;
+  bottom:5px;
+  position: absolute;
+  margin:0px;
+  width: 300px;
+}
+button{
+  height:35px;
+  width:120px;
+  border:0px;
+  padding:12px;
+  border-radius:5px;
+  box-shadow:0 0 5px rgba(0,0,0,0.3);
+  transition:0.3s;
+  background-color:#E4E3E3;
+  font-family:'Ubuntu';
+  margin:4px;
+}
+button:hover{
+   box-shadow:0 0 10px rgba(0,0,0,0.25);
+   background-color:#BA1F33;
+   color:white;
+}
+.flex-items:hover{
+  box-shadow:0 0 15px rgba(0,0,0,0.5);
+}
+.input-title{
+  width:50%;
+  margin:20px;
+  margin-left:40px;
+  padding:15px;
+  border-radius:5px;
+  border:0px;
+  box-sizing:border-box;
+}
+.input-content{
+  width:80%;
+  margin:20px;
+  margin-left:40px;
+  padding:15px;
+  box-sizing:border-box;
+  border-radius:5px;
+}
+
+
+
