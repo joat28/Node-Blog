@@ -9,14 +9,13 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-html{
-  min-height: 100%;
-  position:relative;
-}
+
 body{
-  margin:0px;
+    margin:0px;
   /* border:0px; */
     background:#9AA7C9;
+     display:table;
+     width:100%;
 } 
 h1{
     font-family:'Lato', sans-serif;
@@ -46,10 +45,13 @@ h1{
 }
 
 .footer{ 
-   position:fixed;
+  width:100%;
+   display:table-row;
+  /* position:;
    bottom:0;
    right: 0;
-   left:0; 
+   left:0;  */
+   /*margin-top:-200px; */
    height:100px;   /* Height of the footer */
    font-family: 'Montserrat', sans-serif;
    padding:10px;
