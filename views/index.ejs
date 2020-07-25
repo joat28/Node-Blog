@@ -20,14 +20,18 @@
 
      <div class="flex-items">
                         <div class="card-heading">
-                            <%= blogArray[i].blogTitle %>
+                            <%= blogArray[i].textfield.blogTitle %>
                         </div>
                         <div class="card-content">
-                            <%= blogArray[i].blogContent %>
+                            <%= blogArray[i].textfield.blogContent %>
                         </div>
                         <div class="card-buttons">
-                            <button><a href="readpost/<%=blogArray[i].id  %>">Edit post </a></button>
-                            <button><a href="readpost/<%=blogArray[i].id  %>">Read more </a></button>
+                            <!-- <button><a href="posts/blogArray[i]._id/edit">Edit post </a></button> -->
+                            <button><a href="posts/<%=blogArray[i]._id  %>">Read more </a></button>
+                            <!-- <form action="posts/edit" method="post">
+
+                                
+                            </form> -->
                         </div>
       </div> 
          

@@ -1,0 +1,12 @@
+<%- include("partials/header"); -%>
+
+<div style="margin-top:50px; text-align:center;">
+    <form action="/user/register" method="post">
+         <input  class="input-title" type="text" name="email" placeholder="Email here " style="border:5px solid black"><br>
+         <input  class="input-title" type="text" name="password" placeholder="Password here" style="border:5px solid black"><br>
+         <input  class="input-title" type="text" name="fullName" placeholder="Full Name here" style="border:5px solid black"><br>
+         <button type="submit">Sign Up</button>
+    </form>
+</div>
+
+<%- include("partials/footer"); -%>

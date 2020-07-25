@@ -2,17 +2,27 @@
   "name": "first-week-project",
   "version": "1.0.0",
   "description": "The first week project of intro to node course in iitg",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Prabhat Rao",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.3",
     "express": "^4.17.1",
-    "lodash": "^4.17.19",
-    "nodemon": "^2.0.4"
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.0",
+    "mongoose": "^5.9.25",
+    "mongoose-populate": "^3.0.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1",
+    "promise": "^8.1.0"
   }
 }
