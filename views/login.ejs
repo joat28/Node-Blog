@@ -2,10 +2,12 @@
 
 <div style="margin:auto; text-align:center; ">
     <form action="/user/login" method="post">
-         <input class="input-title" type="text" name="email" placeholder="Email here" style="border:5px solid black"><br>
+         <input class="input-title" type="text" name="username" placeholder="Username" style="border:5px solid black"><br>
          <input class="input-title" type="text" name="password" placeholder="Password here" style="border:5px solid black"><br>
+         
          <button type="submit">Log in</button>
     </form>
+         <a href="/user/register"><button>Create Account</button></a>
 </div>
 
 <%- include("partials/footer"); -%>

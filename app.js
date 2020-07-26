@@ -13,12 +13,14 @@ const port = process.env.PORT;
 const databaseConnect= require("./database");
 const userController = require("./routers/user")
 const postController = require("./routers/post")
+const User = require('./models/user');
+
+const LocalStrategy = require('passport-local').Strategy; 
 
 
 
 
-
-
+passport.use(new LocalStrategy(User.authenticate())); 
 app.use(session({
     secret : process.env.PASS_SECRET,
     resave :false,
@@ -33,6 +35,13 @@ app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+
+
+
+
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser()); 
+
 //
 
 //const blogArray=[];
@@ -46,6 +55,8 @@ app.route("/")
     });
 
 
+
+    
 
 //     //===================== COMPOSE ROUTE ========================
    

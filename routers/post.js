@@ -1,30 +1,68 @@
 const router = require('express').Router();
 const bodyParser = require('body-parser');
 const Post = require('./../models/post');
+const User = require('./../models/user');
+const passport = require('passport');
+const session = require('express-session');
+const passportLocalMongoose = require('passport-local-mongoose');
+
+
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({extended: true}));
+
+
+const LocalStrategy = require('passport-local').Strategy; 
+
+
+
+
+passport.use(new LocalStrategy(User.authenticate())); 
+router.use(session({
+    secret : process.env.PASS_SECRET,
+    resave :false,
+    saveUninitialized: false
+}));
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser()); 
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: true}));
 
 router.route("/")
     .get(function(req,res){
-        Post.find(function(error,blogArray){
-            if(error){
-                res.json({
-                    status:false,
-                    message:"error in rendering posts in /posts route" 
-                })  
-            }
-            else if(blogArray.length==0){
-                res.json({
-                    status: false,
-                    message:"No posts found, BlogArray is empty"
-                });
 
-            }
-            else{
-                res.render('index',{blogArray:blogArray});
-            }
-        })
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{
+
+
+        
+            Post.find(function(error,blogArray){
+                if(error){
+                    res.json({
+                        status:false,
+                        message:"error in rendering posts in /posts route" 
+                    })  
+                }
+                else if(blogArray.length==0){
+                    res.json({
+                        status: false,
+                        message:"No posts found, BlogArray is empty"
+                    });
+
+                }
+                else{
+                    res.render('index',{blogArray:blogArray});
+                }
+            })
+        }
+        
     });
 
 
@@ -34,98 +72,135 @@ router.route("/")
 
 router.route('/compose')
     .get(function(req,res){
-        res.render('compose');
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{
+
+            res.render('compose');
+        }
+        
+        
     })
     .post(function(req,res){
-        var blogTitle = req.body.blogTitle;
-        var blogContent = req.body.blogContent;
-        const newBlog = new Post({
-            textfield:{
-                blogTitle:blogTitle,
-                blogContent:blogContent
-            },
-            author: "key not used until now"
-         })
-        newBlog.save(function(error, result){
-            if(error){
-                res.json({
-                    status:false,
-                    message:"Post was not saved due to error.."
-                })
-
-            }
-            else{ 
-                res.redirect('/posts')
-            }
-        })
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{
+            
+            var blogTitle = req.body.blogTitle;
+            var blogContent = req.body.blogContent;
+            const newBlog = new Post({
+                textfield:{
+                    blogTitle:blogTitle,
+                    blogContent:blogContent
+                },
+                author: "key not used until now"
+             })
+            newBlog.save(function(error, result){
+                if(error){
+                    res.json({
+                        status:false,
+                        message:"Post was not saved due to error.."
+                    })
+    
+                }
+                else{ 
+                    res.redirect('/posts')
+                }
+            })
+        }
     })
 
 router.route('/:post_id')
     .get(function(req,res){
-        Post.findById(req.params.post_id, function(error,result){
-            if(error){
-                res.json({
-                    status:false,
-                    message:"Error in reading a particular post..."
-                })
-            }
-            else if(result==null){
-                res.json({
-                    status:false,
-                    message:"Post was not found..."
-                })
-            }
-            else{
-                // res.json({
-                //     status:true,
-                //     message:"Post found and will be rendered..."
-                // })
-                res.render('readpost',{blogToRender:result});
-            }
-        })  
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{
+            
+            Post.findById(req.params.post_id, function(error,result){
+                if(error){
+                    res.json({
+                        status:false,
+                        message:"Error in reading a particular post..."
+                    })
+                }
+                else if(result==null){
+                    res.json({
+                        status:false,
+                        message:"Post was not found..."
+                    })
+                }
+                else{
+                    // res.json({
+                    //     status:true,
+                    //     message:"Post found and will be rendered..."
+                    // })
+                    res.render('readpost',{blogToRender:result});
+                }
+            })  
+        }
     })
 
 router.route('/:post_id/delete')
     .get(function(req,res){
-        Post.findByIdAndDelete(req.params.post_id, function(error,result){
-            if(error){
-                res.json({
-                    status: true,
-                    message: "Error in deletion"
-                })
-            }
-            else{
-                res.redirect('/posts');
-            }
-        })
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{
+            
+            Post.findByIdAndDelete(req.params.post_id, function(error,result){
+                if(error){
+                    res.json({
+                        status: true,
+                        message: "Error in deletion"
+                    })
+                }
+                else{
+                    res.redirect('/posts');
+                }
+            })
+        }
         
     })
 router.route('/:post_id/edit')
     .get(function(req, res){
-        Post.findById(req.params.post_id,function(error ,result){
-            if(error||result==null){
-                res.json({
-                    status:false,
-                    message: "Error in rendering edit page Or null"
-                })
-            }
-            else{
-                res.render('editAndReplace',{blogObject:result});
-            }
-        })
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{
+            
+            Post.findById(req.params.post_id,function(error ,result){
+                if(error||result==null){
+                    res.json({
+                        status:false,
+                        message: "Error in rendering edit page Or null"
+                    })
+                }
+                else{
+                    res.render('editAndReplace',{blogObject:result});
+                }
+            })
+        }
     })
     .post(function(req,res){
-        Post.updateOne({_id:req.params.post_id},{textfield:req.body}, function(error,result){
-            if(error){
-                res.json({
-                    status: false,
-                    message: "Error in Updating document! or Null result "
-                })
-            }
-            else{
-                res.redirect('/posts')
-            }
-        })
+        if(!req.user){
+            res.redirect("/user/login");
+        }
+        else{  
+            Post.updateOne({_id:req.params.post_id},{textfield:req.body}, function(error,result){
+                if(error){
+                    res.json({
+                        status: false,
+                        message: "Error in Updating document! or Null result "
+                    })
+                }
+                else{
+                    res.redirect('/posts')
+                }
+            })
+        }
 
     })
 

@@ -128,7 +128,7 @@ a {
 button{
   height:35px;
   width:120px;
-  border:0px;
+  border:none;
   padding:12px;
   border-radius:5px;
   box-shadow:0 0 5px rgba(0,0,0,0.3);
@@ -138,9 +138,18 @@ button{
   margin:4px;
 }
 button:hover{
-   box-shadow:0 0 10px rgba(0,0,0,0.25);
+   box-shadow:0 0 10px rgba(0,0,0,0.35);
    background-color:#BA1F33;
    color:white;
+}
+button:focus{
+  border:none;
+  outline:none;
+}
+button:active{
+  transform: scale(0.97);
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
+
 }
 .flex-items:hover{
   box-shadow:0 0 15px rgba(0,0,0,0.5);
@@ -183,8 +192,8 @@ p{
   width:1200px;
   margin-top:60px;
 }
-.edit-compose-button{
-  margin-bottom:800px;
+.compose-button,.edit-compose-button{
+  margin-bottom:500px;
   margin-left:40px;
 }
 

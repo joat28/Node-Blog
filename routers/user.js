@@ -3,11 +3,33 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const User = require('./../models/user');
 const Post = require('./../models/post');
+const passport = require('passport');
+const session = require('express-session');
+const passportLocalMongoose = require('passport-local-mongoose');
+
 
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: true}));
 
+
+const LocalStrategy = require('passport-local').Strategy; 
+
+
+
+
+passport.use(new LocalStrategy(User.authenticate())); 
+router.use(session({
+    secret : process.env.PASS_SECRET,
+    resave :false,
+    saveUninitialized: false
+}));
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser()); 
 
 
 
@@ -23,70 +45,148 @@ router.route ("/register")
     })
     .post(function(req,res){
     const newUser = new User({
+        username:req.body.username,
         email: req.body.email,
-        password: req.body.password,
+        //password: req.body.password,
         fullName: req.body.fullName
     })
-    newUser.save(function(err, result){
+    // newUser.save(function(err, result){
 
-        if(err){
+    //     if(err){
+    //         res.json({
+    //             status:false,
+    //             message: "failed to save data",
+    //             error: err
+    //         })
+    //     }
+    //     else{
+    //         res.json({
+    //             status:true,
+    //             message: "Data saved",
+    //             result: result
+    //         })
+    //     }
+    // });
+
+    User.register(newUser, req.body.password, function(error,result){
+        if(error){
             res.json({
                 status:false,
-                message: "failed to save data",
-                error: err
+                message: "Error in registering user",
+                error: error
             })
         }
         else{
-            res.json({
-                status:true,
-                message: "Data saved",
-                result: result
-            })
+            // res.json({
+            //     status:true,
+            //     message: "User saved in Data.."
+            // })
+            res.redirect('/user/login');
         }
-    });
+    })
 })
 
 
-router.route ("/login")
+router.route ("/login",)
     .get(function(req,res){
         res.render('login');
     })
-    .post(function(req,res){
-        var password = req.body.password;
-        var email = req.body.email;
-        User.findOne({email:email},function(error,result){
-            if(error){
+    .post(passport.authenticate('local'),function(req,res){
+
+
+
+
+
+
+        if(!req.body.username){
+            console.log("loggin in passed FIRST errors")
+            res.json({
+                status:false,
+                message: "No username provided"
+            })   
+        }
+        else{
+            if(!req.body.password){
                 res.json({
                     status:false,
-                    message:"Error in findOne Function",
-                    result:result,
-                });
-            }
-            else if(result==null){
-                res.json({
-                    status:false,
-                    message: "Unable to find the user using email"
+                    message: "No password provided"
                 })
             }
             else{
-                if(password == req.body.password){
-                    console.log("FOUND!!!!! USER CREDENTIALS CORRECT! ............");
-                    res.redirect("/posts")
-                    // res.json({
-                    // status: true,
-                    // message: "Login Success...",
-                    // result:result
-                    }
-                else{
-                    res.json({
-                        status: false,
-                        message: "password did not match..."
-                    })
-                }
+                console.log("basic errors checked");
+
+
+                passport.authenticate("local")(req, res, function() {
+                   res.redirect("/posts");
+                });
+                // passport.authenticate('local',{successRedirect:"/posts",failureRedirect:"user/login", failureFlash:true})
+
+                // req.login(user, function(err){
+                //  if(err){
+                //     res.json({
+                //         status:false,
+                //         message: err
+                //     })
+                // } else{
+                //     passport.authenticate('local',{request,response,function(){
+                //         res.redirect("/posts")
+                //     }})
+
+                // }
+                // })
 
             }
-        });   
-    });
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // var password = req.body.password;
+        // var email = req.body.email;
+        // User.findOne({email:email},function(error,result){
+        //     if(error){
+        //         res.json({
+        //             status:false,
+        //             message:"Error in findOne Function",
+        //             result:result,
+        //         });
+        //     }
+        //     else if(result==null){
+        //         res.json({
+        //             status:false,
+        //             message: "Unable to find the user using email"
+        //         })
+        //     }
+        //     else{
+        //         if(password == req.body.password){
+        //             console.log("FOUND!!!!! USER CREDENTIALS CORRECT! ............");
+        //             res.redirect("/posts")
+        //             // res.json({
+        //             // status: true,
+        //             // message: "Login Success...",
+        //             // result:result
+        //             }
+        //         else{
+        //             res.json({
+        //                 status: false,
+        //                 message: "password did not match..."
+        //             })
+        //         }
+
+        //     }
+        // });   
+    
 
 
 
@@ -137,6 +237,7 @@ router.route ("/login")
 //         }
 //     })
 // })
+
 // router.route(':user_id/posts/compose')
 //     .get(function(req,res){
 //         res.render('compose');
