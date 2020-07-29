@@ -40,14 +40,13 @@ router.route("/")
             res.redirect("/user/login");
         }
         else{
-
-
-        
-            Post.find(function(error,blogArray){
+           
+            Post.find().populate('author').exec(function(error,blogArray){
                 if(error){
                     res.json({
                         status:false,
-                        message:"error in rendering posts in /posts route" 
+                        message:"error in rendering posts in /posts route" ,
+                        error:error
                     })  
                 }
                 else if(blogArray.length==0){
@@ -76,10 +75,8 @@ router.route('/compose')
             res.redirect("/user/login");
         }
         else{
-
             res.render('compose');
         }
-        
         
     })
     .post(function(req,res){
@@ -95,13 +92,15 @@ router.route('/compose')
                     blogTitle:blogTitle,
                     blogContent:blogContent
                 },
-                author: "key not used until now"
+                author: req.user._id
              })
+
             newBlog.save(function(error, result){
                 if(error){
                     res.json({
                         status:false,
-                        message:"Post was not saved due to error.."
+                        message:"Post was not saved due to error..",
+                        error: error
                     })
     
                 }

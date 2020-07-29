@@ -15,9 +15,9 @@ const schema = new mongoose.Schema({
         }
     },
     author: {
-        type:String
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: 'users'
+       // type:String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
     },
     // image: {
     //     default:null

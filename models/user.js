@@ -27,7 +27,8 @@ const schema = new mongoose.Schema({
     personal: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'posts'
-    }]
+    }],
+    createdOn: { type: Date, default: Date.now },
 });
 
 schema.plugin(passportLocalMongoose);

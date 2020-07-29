@@ -1,0 +1,21 @@
+<%- include("partials/header"); -%>
+<h1 style="text-align:center">Profile Page</h1>
+
+
+<div>
+    <h3>Edit Details:</h3>
+    <form action="/user/edit">
+        <span>Enter New Name</span>
+            <input type="text" value="<%= userObject.username %>" name="newUserName">
+        <span>Enter New password</span>
+            <input type="password" name="newPassword1">
+        <span>Confirm password</span>
+            <input type="password" name="newPassword2">
+    </form>
+</div>
+
+
+
+
+
+<%- include("partials/footer"); -%>

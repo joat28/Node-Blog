@@ -147,6 +147,29 @@ router.route ("/login",)
 
 
 
+router.route('/profile')
+    .get(function(req,res){
+        if(req.user){
+            res.render('profile',{userObject:req.user});
+        }
+        else
+        {
+            res.redirect('/login');
+        }
+    })
+router.route('/logout')
+    .get(function(req,res){
+        req.logout();
+        res.redirect("/")
+    })
+
+
+
+
+
+
+
+
 
 
 
@@ -253,6 +276,23 @@ router.route ("/login",)
 //         }
 //     })
 
+
+//---------------------------------------- DELETE ----------------------------------------------------------------
+router.route('/delete')
+    .get(function(req,res){
+        User.deleteOne({_id:req.user._id},function(error,result){
+            if(error){
+                res.json({
+                    status:false,
+                    message:"Error in deleting the User",
+                    error:error
+                })
+            }
+            else{
+                res.redirect("/");
+            }
+        })
+    })
 
 
 

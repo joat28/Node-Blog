@@ -6,6 +6,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 
+
+
+    <script type="text/javascript">
+      function deleteConfirmation() {
+        var delOne = confirm("Are you sure? you want to delete you account!")
+        if(delOne){
+          var delTwo = confirm('All your posts and comments will Also be deleted! Please confirm.');
+          if(delTwo){
+            var delThree = confirm('This is the last warning, this process is not reversible. DELETE ACCOUNT?')
+            if(delThree){
+              return true;
+            }
+            else{
+              return event.preventDefault();
+            }
+          }
+          else{
+             return event.preventDefault();
+          }
+        }
+        else{
+            return event.preventDefault();
+        }
+      }
+      </script>
+
 </head>
 <body>
 
@@ -15,8 +41,8 @@
             <a href="/posts">         <li class="logo-header nav-li"> HOME</li>    </a> 
             <a href="/posts/compose">  <li class="nav-li">             COMPOSE</li>    </a> 
             <a href="/about">    <li class="nav-li">             ABOUT</li>    </a>
-            <a href="/user/>"> <li class="nav-li">             PROFILE</li>    </a>
-           <a href="/contact">   <li class="nav-li">             MY BLOGS</li>     </a>
+            <a href="/user/profile"> <li class="nav-li">             PROFILE</li>    </a>
+           <a href="/user/logout">   <li class="nav-li">             LOGOUT</li>     </a>
           </ul>
         </nav>
       </div>  

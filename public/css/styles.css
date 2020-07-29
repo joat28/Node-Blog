@@ -9,6 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@200;400&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
 
 body{
     margin:0px;
@@ -195,5 +196,13 @@ p{
 .compose-button,.edit-compose-button{
   margin-bottom:500px;
   margin-left:40px;
+}
+.card-author{
+  padding-right:20px;
+  max-height: 20px;
+  font-size: 17px;
+  text-align: right;
+  font-family: 'Niconne', cursive;
+  
 }
 

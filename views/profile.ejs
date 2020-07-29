@@ -1,6 +1,14 @@
 <%- include("partials/header"); -%>
-<h1 style="text-align:center">Contact Page</h1>
+<h1 style="text-align:center">Profile Page</h1>
 
+
+<div>
+    <h3>Username: <%= userObject.username %></h3>
+    <h3>Name: <%= userObject.fullName%></h3>
+    <h3>User since: <%= userObject.createdOn %></h3>
+    <a href="/user/delete" ><button onClick="deleteConfirmation()">DELETE ACCOUNT</button></a>
+    <a href="/user/edit" ><button>EDIT DETAILS/ CHANGE PASSWORD</button></a>
+</div>
 
 
 
