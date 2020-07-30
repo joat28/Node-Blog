@@ -141,6 +141,42 @@ router.route ("/login",)
 
 
 
+router.route('/myposts')
+    .get(function(req,res){
+        if(!req.user){
+            res.redirect('/user/login')
+        }
+
+        else{
+            
+            User.findById(req.user._id).populate('personal').exec(function(error,result){
+                if(error){
+                    res.json({
+                        status :false,
+                        message: "Error in finding and populating"
+                    })
+
+                }
+                else{
+                  //  console.log(result);
+
+                    // res.json({
+                    //     status:true,
+                    //     message:"populated successfully",
+                    //     result: result
+                    // })
+                    res.render('myblogs',{userObject:result})
+                }
+            })
+                
+            // //req.user.populate('personal');
+         }
+        
+    
+    })
+
+
+
 
 
 

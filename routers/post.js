@@ -93,6 +93,7 @@ router.route('/compose')
                     blogContent:blogContent
                 },
                 author: req.user._id
+            
              })
 
             newBlog.save(function(error, result){
@@ -102,10 +103,25 @@ router.route('/compose')
                         message:"Post was not saved due to error..",
                         error: error
                     })
-    
                 }
-                else{ 
-                    res.redirect('/posts')
+                else{
+                   
+
+                    User.findByIdAndUpdate(req.user._id, {$push:{personal:newBlog._id}},function(error,result){
+                        if(error){
+                            res.json({
+                                status:false,
+                                message: "Blog created, but unable to push into personal array!",
+                                error: error
+                            })
+                        }
+                        else{
+                            res.redirect('/posts')
+                        }
+                    })
+                   
+                   
+                     
                 }
             })
         }

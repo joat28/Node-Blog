@@ -1,0 +1,50 @@
+<%- include("partials/header"); -%>
+
+<h1 style="text-align:center"> My Posts</h1>
+
+
+
+<!-- pass blogArray as blogArray -->
+
+<div class="flex-container">
+   
+<% for( var i=0;i<userObject.personal.length;++i){ %>
+    
+    
+
+
+    <!-- console.log(blogArray[i].blogTitle);  
+    console.log(blogArray[i].blogContent);  -->
+
+
+    <!-- below is each of the flex-item -->
+
+
+     <div class="flex-items">
+                        <div class="card-heading">
+                            <%= userObject.personal[i].textfield.blogTitle %>
+                        </div>
+                        <div class="card-author"> ~ <%= userObject.fullName %></div>
+                        <div class="card-content">
+                            <%= userObject.personal[i].textfield.blogContent %>
+                        </div>
+                        <div class="card-buttons">
+                            <!-- <button><a href="posts/blogArray[i]._id/edit">Edit post </a></button> -->
+                            <a href="/posts/<%=userObject.personal[i]._id  %>"><button>Read more</button></a>
+                            <!-- <form action="posts/edit" method="post">
+
+                                
+                            </form> -->
+                        </div>
+      </div> 
+         
+
+
+
+
+<% } %>
+    </div>
+
+
+
+<%- include("partials/footer"); -%>

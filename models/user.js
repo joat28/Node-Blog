@@ -24,10 +24,12 @@ const schema = new mongoose.Schema({
     //     type: String,
     //     required: true
     // },
-    personal: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'posts'
-    }],
+    
+        personal: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'posts'
+        }],
+    
     createdOn: { type: Date, default: Date.now },
 });
 
