@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const Schema =  mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
+const findOrCreate = require('mongoose-findorcreate')
 
 
 
 const schema = new mongoose.Schema({
+    google_id:{
+        type: String
+    },
 
     username:{
         type:String,
@@ -20,12 +24,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // password: {
-    //     type: String,
-    //     required: true
-    // },
-    
-        personal: [{
+    personal: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'posts'
         }],
@@ -34,6 +33,7 @@ const schema = new mongoose.Schema({
 });
 
 schema.plugin(passportLocalMongoose);
+schema.plugin(findOrCreate)
 mongoose.model('users', schema);
 
 module.exports = mongoose.model('users');

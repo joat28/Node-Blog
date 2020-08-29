@@ -6,6 +6,7 @@ const Post = require('./../models/post');
 const passport = require('passport');
 const session = require('express-session');
 const passportLocalMongoose = require('passport-local-mongoose');
+const findOrCreate = require('mongoose-findorcreate')
 
 
 
@@ -14,7 +15,7 @@ router.use(bodyParser.urlencoded({extended: true}));
 
 
 const LocalStrategy = require('passport-local').Strategy; 
-
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 
@@ -22,7 +23,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 router.use(session({
     secret : process.env.PASS_SECRET,
     resave :false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 
 router.use(passport.initialize());
@@ -31,12 +32,56 @@ router.use(passport.session());
 passport.serializeUser(User.serializeUser()); 
 passport.deserializeUser(User.deserializeUser()); 
 
+// passport.use(new GoogleStrategy({
+//     clientID: process.env.CLIENT_ID,
+//     clientSecret: process.env.CLIENT_SECRET,
+//     callbackURL: "https://localhost:3000/user/auth/google/posts",
+//     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.findOrCreate({ googleId: profile.id }, function (err, user) {
+//       return cb(err, user);
+//     });
+//   }
+// ));
+
 
 
 
 
 
 //------------------------------------------  CREATE ---------------------------------------------
+
+
+
+router.route("/")
+    .get(function(req,res){
+        User.find(function(error,result){
+            if(error){
+                res.json({
+                    status: false,
+                    message: "Error in finding Users",
+                    error: error
+                })
+            }
+            else{
+                res.json({
+                    status: true,
+                    message: "Users found Successfully",
+                    result: result
+                })
+            }
+        })
+    });
+    // .delete(function(req,res){
+    //     if(!req.user){
+    //         res.json({
+    //             status: false,
+    //             message: "Login required"
+    //         })
+    //     }
+    //     else()
+    // })
 
 
 router.route ("/register")
@@ -47,27 +92,8 @@ router.route ("/register")
     const newUser = new User({
         username:req.body.username,
         email: req.body.email,
-        //password: req.body.password,
         fullName: req.body.fullName
     })
-    // newUser.save(function(err, result){
-
-    //     if(err){
-    //         res.json({
-    //             status:false,
-    //             message: "failed to save data",
-    //             error: err
-    //         })
-    //     }
-    //     else{
-    //         res.json({
-    //             status:true,
-    //             message: "Data saved",
-    //             result: result
-    //         })
-    //     }
-    // });
-
     User.register(newUser, req.body.password, function(error,result){
         if(error){
             res.json({
@@ -77,10 +103,6 @@ router.route ("/register")
             })
         }
         else{
-            // res.json({
-            //     status:true,
-            //     message: "User saved in Data.."
-            // })
             res.redirect('/user/login');
         }
     })
@@ -92,14 +114,8 @@ router.route ("/login",)
         res.render('login');
     })
     .post(passport.authenticate('local'),function(req,res){
-
-
-
-
-
-
         if(!req.body.username){
-            console.log("loggin in passed FIRST errors")
+         //   console.log("loggin in passed FIRST errors")
             res.json({
                 status:false,
                 message: "No username provided"
@@ -113,27 +129,12 @@ router.route ("/login",)
                 })
             }
             else{
-                console.log("basic errors checked");
+             //   console.log("basic errors checked");
 
 
                 passport.authenticate("local")(req, res, function() {
                    res.redirect("/posts");
                 });
-                // passport.authenticate('local',{successRedirect:"/posts",failureRedirect:"user/login", failureFlash:true})
-
-                // req.login(user, function(err){
-                //  if(err){
-                //     res.json({
-                //         status:false,
-                //         message: err
-                //     })
-                // } else{
-                //     passport.authenticate('local',{request,response,function(){
-                //         res.redirect("/posts")
-                //     }})
-
-                // }
-                // })
 
             }
         }
@@ -158,29 +159,11 @@ router.route('/myposts')
 
                 }
                 else{
-                  //  console.log(result);
-
-                    // res.json({
-                    //     status:true,
-                    //     message:"populated successfully",
-                    //     result: result
-                    // })
                     res.render('myblogs',{userObject:result})
                 }
             })
-                
-            // //req.user.populate('personal');
          }
-        
-    
     })
-
-
-
-
-
-
-
 
 
 router.route('/profile')
@@ -199,120 +182,6 @@ router.route('/logout')
         res.redirect("/")
     })
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // var password = req.body.password;
-        // var email = req.body.email;
-        // User.findOne({email:email},function(error,result){
-        //     if(error){
-        //         res.json({
-        //             status:false,
-        //             message:"Error in findOne Function",
-        //             result:result,
-        //         });
-        //     }
-        //     else if(result==null){
-        //         res.json({
-        //             status:false,
-        //             message: "Unable to find the user using email"
-        //         })
-        //     }
-        //     else{
-        //         if(password == req.body.password){
-        //             console.log("FOUND!!!!! USER CREDENTIALS CORRECT! ............");
-        //             res.redirect("/posts")
-        //             // res.json({
-        //             // status: true,
-        //             // message: "Login Success...",
-        //             // result:result
-        //             }
-        //         else{
-        //             res.json({
-        //                 status: false,
-        //                 message: "password did not match..."
-        //             })
-        //         }
-
-        //     }
-        // });   
-    
-
-
-
-
-
-
-//------------------------------------------------- READ ----------------------------------------------------------------
-
-// router.route('/:user_id')
-//     .get(function(req,res){
-//         res.
-//     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// router.get('/home',function(req,res){
-//     Post.find(function(error,result){
-//         if(error){
-//             res.json({
-//                 status:false,
-//                 message:"Error in fetching data (find) ..."
-//             })
-//         }
-//         else{
-//             if(result==null){
-//                 res.json({
-//                     status:true,
-//                     message: " No error in fetching but no posts found ..."
-//                 })
-                
-//             }
-//             else{
-            
-//             }
-//         }
-//     })
-// })
-
-// router.route(':user_id/posts/compose')
-//     .get(function(req,res){
-//         res.render('compose');
-//     })
-//     .post(function(req,res){
-//         const newPost={
-//             textfield:{
-//                 title: req.body.blogTitle,
-//                 content: req.body.blogContent
-//             },
-
-//             author:
-//         }
-//     })
-
-
 //---------------------------------------- DELETE ----------------------------------------------------------------
 router.route('/delete')
     .get(function(req,res){
@@ -329,8 +198,5 @@ router.route('/delete')
             }
         })
     })
-
-
-
 
 module.exports = router;

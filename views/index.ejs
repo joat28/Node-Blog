@@ -11,11 +11,10 @@
 <% for( var i=0;i<blogArray.length;++i){ %>
 
 
-    <!-- console.log(blogArray[i].blogTitle);  
-    console.log(blogArray[i].blogContent);  -->
+    <%# console.log(blogArray[i]); %>  
+    
 
-
-    <!-- below is each of the flex-item -->
+    <!-- below is each of the flex-item --> 
 
 
      <div class="flex-items">
@@ -27,15 +26,12 @@
                             <%= blogArray[i].textfield.blogContent %>
                         </div>
                         <div class="card-buttons">
-                            <!-- <button><a href="posts/blogArray[i]._id/edit">Edit post </a></button> -->
+                           
                             <a href="posts/<%=blogArray[i]._id  %>"><button>Read more</button></a>
-                            <!-- <form action="posts/edit" method="post">
-
-                                
-                            </form> -->
+                            
                         </div>
       </div> 
-         
+          
 
 
 

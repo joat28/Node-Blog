@@ -15,13 +15,19 @@ const schema = new mongoose.Schema({
         }
     },
     author: {
-       // type:String
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
-    // image: {
-    //     default:null
-    // }
+    comments:
+        [{  
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'comments'   
+        }],
+    image_id: {
+        type: String,
+        default: "DNE"
+    }
+    
 });
 
 mongoose.model('posts', schema);

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema =  mongoose.Schema
 
 
 const schema = new mongoose.Schema({
@@ -8,12 +9,12 @@ const schema = new mongoose.Schema({
         required: true
     },
     given_by: {
-        type: Schema.Types.Object_Id,
-        ref: users
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
     },
     given_to: {
-        type: Schema.Types.Object_Id,
-        ref: users
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
     },
     
 });

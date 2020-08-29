@@ -1,12 +1,21 @@
 <%- include("partials/header"); -%>
 
 <div style="margin:auto; text-align:center; ">
+
+
+     <div class="google-auth">
+          <a href="/auth/google"><i class="fa fa-google fa-lg" aria-hidden="true"></i> &nbsp; Sign in/up with Google</a>
+     </div>
+     
     <form action="/user/login" method="post">
          <input class="input-title" type="text" name="username" placeholder="Username" style="border:5px solid black"><br>
          <input class="input-title" type="password" name="password" placeholder="Password here" style="border:5px solid black"><br>
          
          <button type="submit">Log in</button>
     </form>
+
+
+     
          <a href="/user/register"><button>Create Account</button></a>
 </div>
 

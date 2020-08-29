@@ -10,10 +10,56 @@
 
 <div class="read-post">
     <h3><%=blogToRender.textfield.blogTitle%></h3>
-    <p><%= blogToRender.textfield.blogContent%> %></p>
+    <p ><%= blogToRender.textfield.blogContent%></p>
     <a href="/posts/<%= blogToRender._id %>/delete"> <button id="delete-button" onClick="return confirm('Are you sure you want to delete this item?');" method="post"> Delete </button></a> 
     <a href="/posts/<%= blogToRender._id %>/edit"> <button id="edit-button" onClick="return confirm('Are you sure you want to edit this item?');" method="post"> Edit </button></a> 
+    <a href="/posts/<%= blogToRender._id %>/<%=blogToRender.image_id %>"> <button> View Image </button></a> 
+    
+    <hr>
+    <hr>
+    
+    <div class="comment-section">
+        
+        <h4>COMMENTS</h4>
+            <div class="add-comment">
+                <form method="post" action="/posts/<%= blogToRender._id %>/comment/add">
+                    <textarea rows="4" cols="125" class="comment-content" name="addComment" placeholder="Type your comment here (your name will be visible) "></textarea>
+                    <!-- <input class="add-comment" type="text" name="addComment" placeholder="Add comment"> -->
+                    <button type="submit">Comment </button>
+                </form>
+           
+
+
+
+            <% for(var i = blogToRender.comments.length - 1; i>=0 ; --i) { %> 
+                
+                    <div class = "add-comment">
+                        
+                        
+                            <p> <%= blogToRender.comments[i].textfield %> </p>
+                            <div class=" card-author">
+                                 ~ <%= blogToRender.comments[i].given_by.fullName %> 
+                                 <% if(curr_user_id.equals(blogToRender.comments[i].given_by._id)) { %> 
+                                    <a href ="/comments/<%=blogToRender._id %>/<%= blogToRender.comments[i]._id %>/delete"style =" margin:10px;" onClick = " return basicConfirmation('Delete this comment')"> <i area-hidden="true" class="fa fa-trash"></i></a>
+                                    <a href= "" style =" margin:10px;" onClick = " return basicConfirmation('Edit this comment')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                <% } %> 
+                            </div>
+                            
+                            
+                            
+                       
+    
+                    </div>
+                
+            <% } %> 
+
+
+             </div>
+
+    </div>
 </div>
+
+
 
 
 

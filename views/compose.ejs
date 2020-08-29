@@ -1,16 +1,17 @@
 <%- include("partials/header"); -%>
 <h1 style="text-align:center">Compose Page</h1>
 
-
-
-
-
-<form action="/posts/compose" method="post">
+<form action="/posts/compose" method="post" enctype="multipart/form-data">
     <input class="input-title" type="text" name="blogTitle"  placeholder="Enter the title of the blog">
     <br>
     <textarea rows="10" cols="50" class="input-content" name="blogContent" placeholder="Enter the content of the blog"></textarea><br>
+    <input type="file" name="blogImage" > <br>
     <button type="submit" class="compose-button">Compose Post</button>
 </form>
+
+
+
+
 
 
 
