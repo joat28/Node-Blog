@@ -8,6 +8,7 @@ const ejs = require("ejs");
 const assert =  require('assert');
 const morgan =  require('morgan');
 
+
 const app = express();
 const port = process.env.PORT;
 const databaseConnect= require("./database");
@@ -16,9 +17,19 @@ const commentController = require("./routers/comment")
 const postController = require("./routers/post")
 const User = require('./models/user');
 
+
 const LocalStrategy = require('passport-local').Strategy; 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+app.use((req,res,next) =>{
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if(req.method === 'OPTIONS'){
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH')
+    }
+    next();
+})
 passport.use(new LocalStrategy(User.authenticate())); 
 app.use(session({
     secret : process.env.PASS_SECRET,
