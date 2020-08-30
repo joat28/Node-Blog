@@ -4,13 +4,10 @@
 
 <div>
     <h3>Edit Details:</h3>
-    <form action="/user/edit">
-        <span>Enter New Name</span>
-            <input type="text" value="<%= userObject.username %>" name="newUserName">
-        <span>Enter New password</span>
-            <input type="password" name="newPassword1">
-        <span>Confirm password</span>
-            <input type="password" name="newPassword2">
+    <form action="/user/edit" method="POST">
+        <span>Enter New username</span>
+            <input type="text" value="<%= userObject.fullName %>" name="newUserName">
+        <button type="submit">Update</button>
     </form>
 </div>
 

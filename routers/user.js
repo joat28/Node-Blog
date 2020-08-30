@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const User = require('./../models/user');
 const Post = require('./../models/post');
+const Comment = require('./../models/comment');
 const passport = require('passport');
 const session = require('express-session');
 const passportLocalMongoose = require('passport-local-mongoose');
@@ -194,9 +195,75 @@ router.route('/delete')
                 })
             }
             else{
-                res.redirect("/");
+                Post.deleteMany({author: req.user._id}, function(error2,result2){
+                    if(error2){
+                        res.json({
+                            status: false,
+                            message: "Error in deleting users Posts"
+                        })
+                    }
+                    else{
+                        Comment.deleteMany({given_by:req.user._id}, function(error3,result3){
+                            if(error3){
+                                res.json({
+                                    status: false,
+                                    message: "Comments could not be found"
+                                })
+                            }
+                            else{
+                                res.json({
+                                    satus: true,
+                                    message: "User, Posts and Comments Deleted Successfully",
+                                    redirectLink: "http://localhost:3000/user/login"
+                                })
+                            }
+                        })
+                    }
+                })
             }
         })
+    })
+
+
+router.route('/edit')
+    .get(function(req,res){
+        if(!req.user){
+            res.json({
+                status: false,
+                message: " You must be signed in to Edit datails"
+
+            })
+        }
+        else{
+            res.render('profileEdit', {userObject: req.user})
+        }
+    })
+    .post(function(req,res){
+        if(!req.user){
+            res.json({
+                status: false,
+                message: "Sign in first"
+            })
+        }
+        else{
+            User.findByIdAndUpdate(req.user._id,{username:req.body.newUserName} ,function(error,result){
+                if(error){
+                    res.json({
+                        status: false,
+                        message: "Error in Updating User" ,
+                        error: error
+                    })
+                }
+                else{
+                    res.json({
+                        status: true,
+                        message: "User updated successfully",
+                        result: result
+                    })
+                    
+                }
+            })
+        }
     })
 
 module.exports = router;

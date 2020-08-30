@@ -135,14 +135,27 @@ router.route('/compose')
             
             var blogTitle = req.body.blogTitle;
             var blogContent = req.body.blogContent;
-            const newBlog = new Post({
+            
+            var newBlog = new Post({
                 textfield:{
                     blogTitle:blogTitle,
                     blogContent:blogContent
                 },
                 author: req.user._id,
-                image_id:req.file.filename
              })
+
+            if(req.file){
+                 newBlog = new Post({
+                    textfield:{
+                        blogTitle:blogTitle,
+                        blogContent:blogContent
+                    },
+                    author: req.user._id,
+                    image_id:req.file.filename
+                 })
+            }
+            
+            
             console.log(newBlog);
             newBlog.save(function(error, result){
                 if(error){
