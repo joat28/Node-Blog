@@ -401,7 +401,7 @@ router.route('/:post_id/comment/add')
     .post(function(req,res){
         
                             if(!req.user){
-                                res.redirect("/login")
+                                res.redirect("/user/login")
                             }
                             else{    
                             Post.findById(req.params.post_id,function(error, result){

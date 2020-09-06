@@ -174,7 +174,7 @@ router.route('/profile')
         }
         else
         {
-            res.redirect('/login');
+            res.redirect('/user/login');
         }
     })
 router.route('/logout')
