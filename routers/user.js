@@ -255,11 +255,7 @@ router.route('/edit')
                     })
                 }
                 else{
-                    res.json({
-                        status: true,
-                        message: "User updated successfully",
-                        result: result
-                    })
+                    res.redirect("/user/profile")
                     
                 }
             })

@@ -1,12 +1,12 @@
 <%- include("partials/header"); -%>
-<h1 style="text-align:center">Profile Page</h1>
+<h1 style="text-align:center">EDIT PROFILE</h1>
 
 
-<div>
-    <h3>Edit Details:</h3>
+<div class="visible-background"  style=" padding: 40px">
+    <h3 class="span-h3">Edit Details:</h3>
     <form action="/user/edit" method="POST">
-        <span>Enter New username</span>
-            <input type="text" value="<%= userObject.fullName %>" name="newUserName">
+        <span class="span-h3">Enter New username: </span>
+            <input type="text" value="<%= userObject.username %>" name="newUserName">
         <button type="submit">Update</button>
     </form>
 </div>

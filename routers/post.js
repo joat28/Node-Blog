@@ -370,6 +370,7 @@ router.route('/:post_id/edit')
                     })
                 }
                 else{
+                   
                     res.render('editAndReplace',{blogObject:result});
                 }
             })
