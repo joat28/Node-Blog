@@ -83,6 +83,11 @@ To get details about the account. Like username, email and Date of join. There a
 
 ![Profile Page][profile-page]
 ___
+#### Edit Profile Page
+Edit your profile here.
+![Edit profile Page][edit-profile-page]
+
+___
 #### Comments section
 Any user can comment on any of the posts in the feed. Only the author of the comment has the privilege to Edit and Delete the comment (Unless the post itself is deleted by OP).
 
