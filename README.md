@@ -1,7 +1,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 <br />
 <p align="center">
-  <h2 align="center">Node-Blog</h3>
+  <h1 align="center">Node-Blog</h1>
   <p align="center">
     A project to make blogging web app with authentication.  
     <br />
@@ -33,6 +33,7 @@
     </li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
